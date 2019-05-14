@@ -3,7 +3,6 @@ html{
 }
 body{
     margin: 0;
-    /* background-color: #c6d1df; */
     font-size: 12px;
 }
 [src="./logo.png"]{
@@ -14,7 +13,6 @@ body{
     position: relative;
     height: 335px;
     background-color: #c6d1df;
-    background-image: url('./error-men.jpg');
     background-size: cover;
     background-position-y: center;
     background-repeat: no-repeat;

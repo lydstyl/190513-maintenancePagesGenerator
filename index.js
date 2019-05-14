@@ -7,11 +7,11 @@ const template = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Maintenance</title>
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="/www.babyliss.!!xx!!/style.css">
 </head>
 <body>
-    <img src="./logo.png" alt="logo">
-    <div class="error-background">
+    <img src="/www.babyliss.!!xx!!/logo.png" alt="logo">
+    <div class="error-background" style="background-image: url('/www.babyliss.!!xx!!/error-men.jpg');">
         <p class="error-text">!!p!!</p>
     </div>
 </body>
@@ -38,10 +38,16 @@ Pero no te preocupes, volveremos en breve.¡Gracias por tu paciencia!`, title: `
 Ma non preoccuparti, torneremo presto!`}}
 ]
 
+let tmp = path.join(__dirname, `./zip/www.demandware.com`)
 maintenances.forEach(langObj => {
-    const indexFile = template.replace('!!p!!', langObj.content.paragraph)
-    fs.writeFileSync(path.join(__dirname, "./zip/www.demandware.com/index.html"), indexFile, 'utf8')
+    const folderName = `www.babyliss.${langObj.language.toLowerCase()}`
+    fs.renameSync(tmp, path.join(__dirname, `./zip/${folderName}`) )
+    tmp = path.join(__dirname, `./zip/${folderName}`)
+
+    const indexFile = template.replace(/\!\!xx\!\!/g, langObj.language.toLowerCase()).replace('!!p!!', langObj.content.paragraph)
+    fs.writeFileSync(path.join(__dirname, `./zip/${folderName}/index.html`), indexFile, 'utf8')
     const zip = new AdmZip();
     zip.addLocalFolder(path.join(__dirname, "./zip"));
     zip.writeZip(path.join(__dirname, 'generated', langObj.language, "maintpages.zip") );
 });
+fs.renameSync(tmp, path.join(__dirname, `./zip/www.demandware.com`) )
