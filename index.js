@@ -1,16 +1,19 @@
+const fs = require('fs')
 const path = require('path')
 var AdmZip = require('adm-zip');
 
 const template = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>!!title!!</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Maintenance</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
-
-<body bgcolor="#000000">
-<p align="center"><img src="/www.demandware.com/siteDown.png" alt="Demandware.com will be back soon" width="915" height="460" align="middle" /></p>
-<p>!!p!!</p>
+<body>
+    <img src="./logo.png" alt="logo">
+    <div class="error-background">
+        <p class="error-text">!!p!!</p>
+    </div>
 </body>
 </html>
 `
@@ -36,9 +39,9 @@ Ma non preoccuparti, torneremo presto!`}}
 ]
 
 maintenances.forEach(langObj => {
-    const indexFile = template.replace('!!title!!', langObj.content.title).replace('!!p!!', langObj.content.paragraph)
+    const indexFile = template.replace('!!p!!', langObj.content.paragraph)
+    fs.writeFileSync(path.join(__dirname, "./zip/www.demandware.com/index.html"), indexFile, 'utf8')
     const zip = new AdmZip();
-    zip.addFile("index.html", Buffer.alloc(indexFile.length, indexFile), "entry comment goes here");
-    zip.addLocalFile( path.join(__dirname, "./siteDown.png") );
+    zip.addLocalFolder(path.join(__dirname, "./zip"));
     zip.writeZip(path.join(__dirname, 'generated', langObj.language, "maintpages.zip") );
 });
