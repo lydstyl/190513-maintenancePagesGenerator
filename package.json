@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "adm-zip": "^0.4.13"
+    "adm-zip": "^0.4.13",
+    "rimraf": "^2.6.3",
+    "wrench": "^1.5.9"
   }
 }
