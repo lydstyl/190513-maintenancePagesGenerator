@@ -1,4 +1,3 @@
 node_modules
-generated
-*.zip
+generated/www.*
 *.html
